@@ -5,11 +5,19 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
+    X-DNS-Prefetch-Control = "off"
+    X-Permitted-Cross-Domain-Policies = "none"
+    X-Download-Options = "noopen"
     Referrer-Policy = "no-referrer"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
-    Cross-Origin-Embedder-Policy = "require-corp"
+    Origin-Agent-Cluster = "?1"
+
+    # Comprehensive Permissions Policy - Block all unnecessary browser APIs
+    Permissions-Policy = "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), clipboard-write=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), speaker-selection=(), storage-access=(), sync-script=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()"
+
+    # Cross-Origin Isolation (required for SharedArrayBuffer/WebLLM performance)
+    Cross-Origin-Embedder-Policy = "credentialless"
     Cross-Origin-Opener-Policy = "same-origin"
-    Cross-Origin-Resource-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "cross-origin"
     
     # Updated CSP (Tor/.onion compatible - no HTTPS enforcement)
     Content-Security-Policy = """
@@ -17,6 +25,8 @@
       base-uri 'self';
       script-src 'self' 'wasm-unsafe-eval';
       worker-src 'self' blob:;
+      child-src 'none';
+      frame-src 'none';
       connect-src 'self'
         https://huggingface.co
         https://cdn-lfs.huggingface.co
@@ -34,8 +44,11 @@
       frame-ancestors 'none';
     """
     
-    # Cache Control
-    Cache-Control = "no-cache, no-store, must-revalidate, private, max-age=0"
+    # HSTS - Force HTTPS for maximum duration
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
+    # Cache Control - Prevent caching of main HTML
+    Cache-Control = "no-cache, no-store, no-transform, must-revalidate, private, max-age=0, s-maxage=0, proxy-revalidate"
     Pragma = "no-cache"
     Expires = "0"
     Surrogate-Control = "no-store"
@@ -46,7 +59,7 @@
   [headers.values]
     Content-Type = "application/wasm"
     Cache-Control = "public, max-age=31536000, immutable"
-    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Embedder-Policy = "credentialless"
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Resource-Policy = "cross-origin"
 

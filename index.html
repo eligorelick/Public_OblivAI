@@ -21,6 +21,8 @@
                base-uri 'self';
                script-src 'self' 'wasm-unsafe-eval';
                worker-src 'self' blob:;
+               child-src 'none';
+               frame-src 'none';
                connect-src 'self'
                  https://huggingface.co
                  https://cdn-lfs.huggingface.co
@@ -41,7 +43,7 @@
     <!-- <meta http-equiv="X-Frame-Options" content="DENY"> -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
+    <meta http-equiv="Permissions-Policy" content="accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), clipboard-write=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), speaker-selection=(), storage-access=(), sync-script=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, private, max-age=0" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
