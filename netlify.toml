@@ -1,7 +1,9 @@
 # Build settings - Static site, no build needed
 [build]
+  base = "."
   publish = "."
   command = "echo 'Static site - no build required'"
+  ignore = "exit 0"
 
 [[headers]]
   for = "/*"

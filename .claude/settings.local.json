@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(powershell -Command \"Select-String -Path ''index-dg07t6m0.css'' -Pattern ''text-gray-300|text-gray-400'' -AllMatches | ForEach-Object { $_Line.Substring([Math]::Max(0, $_Line.IndexOf(''.text-gray-3'')), [Math]::Min(150, $_Line.Length - $_Line.IndexOf(''.text-gray-3''))) }\")",
+      "Bash(findstr:*)",
+      "Bash(powershell -Command \"$content = Get-Content ''index-dg07t6m0.css'' -Raw; if ($content -match ''\\.text-gray-300\\{[^}]+\\}'') { $matches[0] } else { ''Not found'' }\")",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []
