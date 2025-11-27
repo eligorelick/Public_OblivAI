@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/Whitelogotransparentbg.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="OBLIVAI - True AI Privacy. Chat with AI models running entirely in your browser. No servers, no tracking, no compromise." />
+    <meta name="keywords" content="private AI, local AI, browser AI, WebLLM, privacy-first chat, no tracking" />
+    <meta property="og:title" content="OBLIVAI - Private AI Chat" />
+    <meta property="og:description" content="Chat with AI models running entirely in your browser. Your conversations never leave your device." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="OBLIVAI - Private AI Chat" />
+    <meta name="twitter:description" content="True AI Privacy - No Servers, No Tracking, No Compromise" />
+    <meta name="referrer" content="no-referrer" />
+
+    <!-- Content Security Policy (Tor/.onion compatible - no HTTPS enforcement) -->
+    <!-- Note: frame-ancestors only works via HTTP headers, not meta tags -->
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               base-uri 'self';
+               script-src 'self' 'wasm-unsafe-eval';
+               worker-src 'self' blob:;
+               connect-src 'self'
+                 https://huggingface.co
+                 https://cdn-lfs.huggingface.co
+                 https://*.huggingface.co
+                 https://*.xethub.hf.co
+                 https://raw.githubusercontent.com
+                 https://*.githubusercontent.com;
+               img-src 'self' data: blob:;
+               style-src 'self' 'unsafe-inline';
+               font-src 'self' data:;
+               form-action 'none';
+               object-src 'none';
+               media-src 'self';
+               manifest-src 'self'" />
+
+    <!-- Note: X-Frame-Options should be set in server configuration -->
+    <!-- This is just a fallback -->
+    <!-- <meta http-equiv="X-Frame-Options" content="DENY"> -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, private, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#8B5CF6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="OblivAI" />
+    <link rel="apple-touch-icon" href="/Whitelogotransparentbg.png" />
+
+    <!-- Small external script to set initial theme before React mounts -->
+    <script src="/set-theme.js"></script>
+
+    <!-- Preconnect to CDN for faster model loading -->
+    <link rel="preconnect" href="https://huggingface.co" />
+    <link rel="preconnect" href="https://cdn-lfs.huggingface.co" />
+
+    <title>OBLIVAI - Private AI Chat | No Servers, No Tracking</title>
+
+  <!-- Local-first fonts: removed external Google Fonts for privacy (use system fonts fallback) -->
+    <script type="module" crossorigin src="/assets/index-CzFyAkSK.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-d2XN-_nt.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-vendor-DlLrINX8.js">
+    <link rel="modulepreload" crossorigin href="/assets/webllm-B7Bnfzk1.js">
+    <link rel="modulepreload" crossorigin href="/assets/security-B43DZodL.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-DG07t6m0.css">
+  </head>
+  <body>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-purple-600 focus:text-white focus:rounded-lg">Skip to main content</a>
+    <div id="root"></div>
+
+    <noscript>
+      <style>
+        /* No-JS Fallback Styles - Pure CSS */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+          background: linear-gradient(135deg, #0F0F23 0%, #1a1a2e 100%);
+          color: #E4E4E7;
+          line-height: 1.6;
+          padding: 20px;
+        }
+        .noscript-wrapper {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .noscript-header {
+          text-align: center;
+          padding: 40px 20px;
+          background: rgba(139, 92, 246, 0.1);
+          border-radius: 16px;
+          margin-bottom: 40px;
+          border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        .noscript-header h1 {
+          font-size: 3rem;
+          background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          margin-bottom: 16px;
+        }
+        .noscript-header p {
+          font-size: 1.25rem;
+          color: #A1A1AA;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        .alert {
+          background: rgba(251, 191, 36, 0.1);
+          border: 2px solid rgba(251, 191, 36, 0.3);
+          border-radius: 12px;
+          padding: 24px;
+          margin-bottom: 40px;
+        }
+        .alert h2 {
+          color: #FBD38D;
+          margin-bottom: 12px;
+          font-size: 1.5rem;
+        }
+        .alert p {
+          color: #E4E4E7;
+          margin-bottom: 8px;
+        }
+        .alert strong {
+          color: #FBD38D;
+        }
+        .content-section {
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 12px;
+          padding: 32px;
+          margin-bottom: 32px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .content-section h2 {
+          color: #8B5CF6;
+          font-size: 2rem;
+          margin-bottom: 16px;
+          border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+          padding-bottom: 12px;
+        }
+        .content-section h3 {
+          color: #A78BFA;
+          font-size: 1.5rem;
+          margin-top: 24px;
+          margin-bottom: 12px;
+        }
+        .content-section ul {
+          list-style: none;
+          padding-left: 0;
+        }
+        .content-section ul li {
+          padding: 8px 0 8px 28px;
+          position: relative;
+        }
+        .content-section ul li:before {
+          content: "✓";
+          position: absolute;
+          left: 0;
+          color: #10B981;
+          font-weight: bold;
+        }
+        .feature-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 20px;
+          margin-top: 24px;
+        }
+        .feature-card {
+          background: rgba(139, 92, 246, 0.05);
+          border: 1px solid rgba(139, 92, 246, 0.2);
+          border-radius: 8px;
+          padding: 20px;
+        }
+        .feature-card h4 {
+          color: #8B5CF6;
+          margin-bottom: 8px;
+          font-size: 1.1rem;
+        }
+        .feature-card p {
+          color: #A1A1AA;
+          font-size: 0.9rem;
+        }
+        .model-tier {
+          background: rgba(255, 255, 255, 0.02);
+          border-left: 4px solid #8B5CF6;
+          padding: 16px;
+          margin-bottom: 16px;
+        }
+        .model-tier h4 {
+          color: #8B5CF6;
+          margin-bottom: 8px;
+        }
+        .model-tier p {
+          color: #A1A1AA;
+          font-size: 0.9rem;
+        }
+        a {
+          color: #8B5CF6;
+          text-decoration: none;
+          border-bottom: 1px solid transparent;
+          transition: border-bottom 0.2s;
+        }
+        a:hover {
+          border-bottom: 1px solid #8B5CF6;
+        }
+        .cta-button {
+          display: inline-block;
+          background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+          color: white;
+          padding: 16px 32px;
+          border-radius: 8px;
+          font-weight: 600;
+          margin-top: 16px;
+          text-align: center;
+        }
+        .privacy-badge {
+          display: inline-block;
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid rgba(16, 185, 129, 0.3);
+          color: #10B981;
+          padding: 4px 12px;
+          border-radius: 16px;
+          font-size: 0.85rem;
+          font-weight: 600;
+          margin-right: 8px;
+          margin-bottom: 8px;
+        }
+        .tech-stack {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 16px;
+        }
+        .tech-badge {
+          background: rgba(139, 92, 246, 0.1);
+          border: 1px solid rgba(139, 92, 246, 0.3);
+          color: #A78BFA;
+          padding: 6px 14px;
+          border-radius: 6px;
+          font-size: 0.85rem;
+        }
+        footer {
+          text-align: center;
+          padding: 40px 20px;
+          color: #71717A;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          margin-top: 60px;
+        }
+        @media (max-width: 768px) {
+          .noscript-header h1 { font-size: 2rem; }
+          .noscript-header p { font-size: 1rem; }
+          .content-section { padding: 20px; }
+          .feature-grid { grid-template-columns: 1fr; }
+        }
+      </style>
+      <div class="noscript-wrapper">
+        <header class="noscript-header">
+          <h1>OBLIVAI</h1>
+          <p>100% Private AI Chat - Your Conversations Stay Yours</p>
+        </header>
+
+        <div class="alert">
+          <h2>⚠️ JavaScript Required</h2>
+          <p><strong>OBLIVAI requires JavaScript to function.</strong></p>
+          <p>This application runs AI models entirely in your browser using WebAssembly and WebGPU. These technologies require JavaScript to operate.</p>
+          <p><strong>Why JavaScript is necessary:</strong></p>
+          <ul style="margin-left: 20px; margin-top: 12px;">
+            <li>AI inference runs in your browser (WebLLM, WebGPU, WebAssembly)</li>
+            <li>No server-side processing - everything happens locally on your device</li>
+            <li>Interactive chat interface requires client-side scripting</li>
+            <li>Model loading and caching uses browser APIs (IndexedDB)</li>
+          </ul>
+          <p style="margin-top: 16px;"><strong>Privacy Guarantee:</strong> Even with JavaScript enabled, <em>no data ever leaves your device</em>. All AI processing happens locally in your browser. No servers, no tracking, no data collection.</p>
+        </div>
+
+        <section class="content-section">
+          <h2>About OBLIVAI</h2>
+          <p>OBLIVAI is a truly private AI chat application that runs entirely in your browser. Unlike traditional AI chatbots that send your conversations to remote servers, OBLIVAI processes everything locally on your device.</p>
+
+          <h3>Privacy Guarantees</h3>
+          <div style="margin-top: 16px;">
+            <span class="privacy-badge">✓ 100% Local</span>
+            <span class="privacy-badge">✓ No Servers</span>
+            <span class="privacy-badge">✓ No Tracking</span>
+            <span class="privacy-badge">✓ No Data Collection</span>
+            <span class="privacy-badge">✓ Open Source</span>
+          </div>
+
+          <h3>Key Features</h3>
+          <ul>
+            <li>Zero server communication - all AI runs in your browser</li>
+            <li>No data collection - conversations never leave your device</li>
+            <li>No tracking - no analytics, cookies, or telemetry</li>
+            <li>No account required - just open and start chatting</li>
+            <li>Works offline - after initial model download</li>
+            <li>33+ AI models - from 350MB to 9GB+, choose based on your device</li>
+            <li>Custom system instructions - personalize AI behavior</li>
+            <li>PWA installable - works as a standalone app</li>
+            <li>Tor/.onion compatible - maximum anonymity</li>
+          </ul>
+        </section>
+
+        <section class="content-section">
+          <h2>Available AI Models</h2>
+          <p>Choose from 33+ different AI models organized in 8 performance tiers:</p>
+
+          <div class="model-tier">
+            <h4>Tiny Tier (350MB-1GB) - Ultra-fast, all devices</h4>
+            <p><strong>5 models:</strong> SmolLM2 360M (350MB), Qwen2.5 0.5B (500MB), Qwen3 0.6B (600MB), Llama 3.2 1B (879MB), TinyLlama 1.1B (879MB)</p>
+          </div>
+
+          <div class="model-tier">
+            <h4>Small Tier (1-2GB) - Fast, most devices</h4>
+            <p><strong>4 models:</strong> Qwen2.5 1.5B (1.63GB) - Recommended, Qwen3 1.7B (1.7GB), SmolLM2 1.7B (1.1GB), Gemma 2-2B (1.73GB)</p>
+          </div>
+
+          <div class="model-tier">
+            <h4>Medium Tier (2-4GB) - High quality, good devices</h4>
+            <p><strong>5 models:</strong> Llama 3.2 3B (2.26GB), Hermes 3 Llama 3B (2.26GB), StableLM 2 Zephyr (1.89GB), Qwen2.5 3B (2.1GB), RedPajama 3B (2.07GB)</p>
+          </div>
+
+          <div class="model-tier">
+            <h4>Large Tier (4-6GB) - Very capable, powerful devices</h4>
+            <p><strong>6 models:</strong> Hermes 2 Pro 7B (4.03GB), Mistral 7B v0.2/v0.3 (4.37GB), OpenHermes 2.5 (4.37GB), NeuralHermes 2.5 (4.37GB), DeepSeek-R1 7B (5.11GB)</p>
+          </div>
+
+          <div class="model-tier">
+            <h4>XL Tier (5-8GB) - Extremely capable, high-end devices</h4>
+            <p><strong>3 models:</strong> Llama 3.1 8B (4.60GB), Hermes 3 Llama 8B (4.98GB), DeepSeek-R1 8B (5.00GB)</p>
+          </div>
+
+          <div class="model-tier">
+            <h4>XXL Tier (4-8GB) - Mathematics specialist</h4>
+            <p><strong>1 model:</strong> WizardMath 7B (4.57GB) - Specialized in mathematics and problem-solving</p>
+          </div>
+
+          <div class="model-tier">
+            <h4>XXXL Tier (2-6GB) - Advanced models</h4>
+            <p><strong>5 models:</strong> Phi-3.5 Mini (2.3GB), Qwen3 4B (2.5GB), Qwen2.5 7B (4.7GB), Qwen3 8B (5.0GB), Gemma 2-9B (5.4GB)</p>
+          </div>
+
+          <div class="model-tier">
+            <h4>Coding Tier (400MB-5GB) - Specialized for software development</h4>
+            <p><strong>4 models:</strong> Qwen2.5-Coder 0.5B (400MB), Qwen2.5-Coder 1.5B (1.2GB), Qwen2.5-Coder 3B (2.1GB), Qwen2.5-Coder 7B (4.7GB)</p>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <h2>How It Works</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <h4>1. Model Download</h4>
+              <p>First time only: Download your chosen AI model from HuggingFace CDN. Cached locally for offline use.</p>
+            </div>
+            <div class="feature-card">
+              <h4>2. Local Processing</h4>
+              <p>All AI inference happens in your browser using WebGPU, WebGL, or WebAssembly - no servers involved.</p>
+            </div>
+            <div class="feature-card">
+              <h4>3. Private Chat</h4>
+              <p>Your conversations stay in memory only. No data storage, no cloud sync, no tracking.</p>
+            </div>
+            <div class="feature-card">
+              <h4>4. Auto-Delete</h4>
+              <p>When you close the tab, everything is wiped. Zero data persistence (except cached models).</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <h2>System Requirements</h2>
+
+          <h3>Minimum Requirements</h3>
+          <ul>
+            <li>Modern browser with WebAssembly support (Chrome 113+, Safari 17+, Firefox 121+)</li>
+            <li>2GB RAM (for tiny models)</li>
+            <li>1GB free disk space (for model cache)</li>
+            <li>JavaScript enabled</li>
+          </ul>
+
+          <h3>Recommended</h3>
+          <ul>
+            <li>WebGPU-capable GPU (for best performance)</li>
+            <li>8GB+ RAM</li>
+            <li>10GB free disk space (for multiple models)</li>
+            <li>Stable internet connection (for initial model download)</li>
+          </ul>
+        </section>
+
+        <section class="content-section">
+          <h2>Technology Stack</h2>
+          <div class="tech-stack">
+            <span class="tech-badge">React 18</span>
+            <span class="tech-badge">TypeScript</span>
+            <span class="tech-badge">WebLLM</span>
+            <span class="tech-badge">WebGPU</span>
+            <span class="tech-badge">WebAssembly</span>
+            <span class="tech-badge">Vite</span>
+            <span class="tech-badge">Tailwind CSS</span>
+            <span class="tech-badge">Zustand</span>
+            <span class="tech-badge">DOMPurify</span>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <h2>Enable JavaScript</h2>
+          <p>To use OBLIVAI, enable JavaScript in your browser:</p>
+
+          <h3>Chrome / Edge</h3>
+          <ul>
+            <li>Settings → Privacy and security → Site settings → JavaScript → "Sites can use Javascript"</li>
+          </ul>
+
+          <h3>Firefox</h3>
+          <ul>
+            <li>Type <code>about:config</code> in address bar → Accept warning → Search for <code>javascript.enabled</code> → Set to <code>true</code></li>
+          </ul>
+
+          <h3>Safari</h3>
+          <ul>
+            <li>Preferences → Security → Enable JavaScript (checkbox)</li>
+          </ul>
+
+          <h3>Tor Browser</h3>
+          <ul>
+            <li>Security Level → Safer or Standard (JavaScript enabled by default on Standard)</li>
+          </ul>
+        </section>
+
+        <section class="content-section">
+          <h2>Source Code & Documentation</h2>
+          <p>OBLIVAI is open source. Verify the privacy claims yourself:</p>
+          <ul>
+            <li><a href="https://github.com/eligorelick/Obliv_source" target="_blank" rel="noopener">GitHub Repository</a></li>
+            <li><a href="https://github.com/eligorelick/Obliv_source/blob/main/README.md" target="_blank" rel="noopener">Documentation</a></li>
+            <li><a href="https://github.com/eligorelick/Obliv_source/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing Guidelines</a></li>
+            <li><a href="https://github.com/eligorelick/Obliv_source/issues" target="_blank" rel="noopener">Report Issues</a></li>
+          </ul>
+        </section>
+
+        <footer>
+          <p><strong>Built with privacy in mind. Your conversations stay yours.</strong></p>
+          <p style="margin-top: 12px;">OBLIVAI - 100% Private AI Chat | MIT License</p>
+          <p style="margin-top: 8px; font-size: 0.85rem;">No servers • No tracking • No compromise</p>
+        </footer>
+      </div>
+    </noscript>
+
+    <!-- Browser compatibility check - shows friendly message for unsupported browsers -->
+    <script>
+      (function() {
+        var hasWasm = typeof WebAssembly === 'object' && typeof WebAssembly.instantiate === 'function';
+        var hasModules = 'noModule' in HTMLScriptElement.prototype;
+        var hasPromise = typeof Promise !== 'undefined';
+
+        if (!hasWasm || !hasModules || !hasPromise) {
+          document.getElementById('root').innerHTML =
+            '<div style="font-family: system-ui, sans-serif; background: #0F0F23; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center;">' +
+            '<div style="max-width: 500px;">' +
+            '<h1 style="font-size: 1.5rem; margin-bottom: 1rem;">Browser Update Required</h1>' +
+            '<p style="color: #9ca3af; margin-bottom: 1.5rem;">OBLIVAI requires a modern browser with WebAssembly support to run AI models locally in your browser.</p>' +
+            '<p style="color: #9ca3af; margin-bottom: 1rem;">Please update your browser or try one of these:</p>' +
+            '<ul style="list-style: none; padding: 0; color: #06B6D4;">' +
+            '<li style="margin: 0.5rem 0;"><a href="https://www.google.com/chrome/" style="color: #06B6D4;">Chrome 89+</a></li>' +
+            '<li style="margin: 0.5rem 0;"><a href="https://www.mozilla.org/firefox/" style="color: #06B6D4;">Firefox 89+</a></li>' +
+            '<li style="margin: 0.5rem 0;"><a href="https://www.apple.com/safari/" style="color: #06B6D4;">Safari 15+</a></li>' +
+            '<li style="margin: 0.5rem 0;"><a href="https://www.microsoft.com/edge" style="color: #06B6D4;">Edge 89+</a></li>' +
+            '</ul>' +
+            '<p style="color: #6b7280; font-size: 0.875rem; margin-top: 1.5rem;">Your privacy is still protected - no data was sent to any server.</p>' +
+            '</div></div>';
+        }
+      })();
+    </script>
+
+  </body>
+</html>

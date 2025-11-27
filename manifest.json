@@ -1,0 +1,60 @@
+{
+  "name": "OblivAI - Private AI Chat",
+  "short_name": "OblivAI",
+  "description": "100% private AI chat running entirely in your browser. No servers, no tracking, no data collection. Your conversations never leave your device.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F0F23",
+  "theme_color": "#8B5CF6",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["productivity", "utilities", "business"],
+  "icons": [
+    {
+      "src": "/Whitelogotransparentbg.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/Whitelogotransparentbg.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "platform": "wide"
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Start New Chat",
+      "short_name": "New Chat",
+      "description": "Start a new private AI conversation",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/Whitelogotransparentbg.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "display_override": ["window-controls-overlay", "standalone"],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
+}

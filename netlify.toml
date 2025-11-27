@@ -1,0 +1,102 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security Headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "no-referrer"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+    
+    # Updated CSP (Tor/.onion compatible - no HTTPS enforcement)
+    Content-Security-Policy = """
+      default-src 'self';
+      base-uri 'self';
+      script-src 'self' 'wasm-unsafe-eval';
+      worker-src 'self' blob:;
+      connect-src 'self'
+        https://huggingface.co
+        https://cdn-lfs.huggingface.co
+        https://*.huggingface.co
+        https://*.xethub.hf.co
+        https://raw.githubusercontent.com
+        https://*.githubusercontent.com;
+      img-src 'self' data: blob:;
+      style-src 'self' 'unsafe-inline';
+      font-src 'self' data:;
+      form-action 'none';
+      object-src 'none';
+      media-src 'self';
+      manifest-src 'self';
+      frame-ancestors 'none';
+    """
+    
+    # Cache Control
+    Cache-Control = "no-cache, no-store, must-revalidate, private, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+    Surrogate-Control = "no-store"
+
+# WASM files - enable streaming compilation
+[[headers]]
+  for = "/*.wasm"
+  [headers.values]
+    Content-Type = "application/wasm"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "cross-origin"
+
+# Service Worker - always get latest version
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Service-Worker-Allowed = "/"
+
+# PWA Manifest
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=utf-8"
+    Cache-Control = "public, max-age=86400"
+
+# Static assets - cache for performance
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# JavaScript bundles
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# CSS files
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Content-Type = "text/css; charset=utf-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Images
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

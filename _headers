@@ -1,0 +1,33 @@
+/*
+  # Security Headers - Production Ready
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  X-DNS-Prefetch-Control: off
+  X-Permitted-Cross-Domain-Policies: none
+  X-Download-Options: noopen
+
+  # Referrer and Origin Controls
+  Referrer-Policy: no-referrer
+  Origin-Agent-Cluster: ?1
+
+  # Cross-Origin Isolation (required for SharedArrayBuffer/WebLLM performance)
+  Cross-Origin-Embedder-Policy: credentialless
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: cross-origin
+
+  # Comprehensive Permissions Policy
+  Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), clipboard-write=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), speaker-selection=(), storage-access=(), sync-script=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()
+
+  # Strict Content Security Policy (production-ready)
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://huggingface.co https://cdn-lfs.huggingface.co https://*.huggingface.co https://*.xethub.hf.co https://raw.githubusercontent.com https://*.githubusercontent.com; worker-src 'self' blob:; child-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; media-src 'self'; manifest-src 'self'
+
+  # HSTS - Force HTTPS for maximum duration
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+  # Cache Control - Prevent all caching
+  Cache-Control: no-cache, no-store, no-transform, must-revalidate, private, max-age=0, s-maxage=0, proxy-revalidate
+  Pragma: no-cache
+  Expires: 0
+  Surrogate-Control: no-store
+
